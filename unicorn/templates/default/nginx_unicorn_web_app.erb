@@ -33,7 +33,9 @@ server {
   }
 
   location / {
-
+    if ($http_x_forwarded_proto != 'https') {
+      return 301 https://$server_name$request_uri;
+    }
     try_files $uri/index.html $uri/index.htm @unicorn;
   }
 
