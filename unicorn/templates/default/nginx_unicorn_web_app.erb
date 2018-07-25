@@ -1,3 +1,5 @@
+log_format cache_status '[$time_local] $remote_addr "$request" $status $upstream_cache_status $body_bytes_sent $skip_cache';
+
 proxy_cache_path /var/run/cache levels=1:2 keys_zone=PROXYCACHE:100m inactive=60m;
 proxy_cache_key "$scheme$request_method$host$request_uri";
 
@@ -16,6 +18,7 @@ server {
   <% else %>
   access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.access.log;
   <%end %>
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.cache.log cache_status;
 
   keepalive_timeout 5;
 
