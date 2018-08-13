@@ -14,4 +14,5 @@ normal[:nginx][:gzip_types] = ["application/atom+xml", "application/javascript",
 normal[:nginx][:gzip_vary] = 'on'
 normal[:nginx][:gzip_proxied] = 'any'
 normal[:nginx][:gzip_comp_level] = '6'
-normal[:nginx][:worker_processes] = '10'
+normal[:nginx][:worker_processes] = 'auto'
+normal[:nginx][:server_tokens] = 'off'
