@@ -1,7 +1,12 @@
+map $http_user_agent $device {
+    default 'pc';
+    ~(iPhone|Android|Mobile|iPad) 'mobile';
+}
+
 log_format cache_status '[$time_local] $remote_addr "$request" $status $upstream_cache_status $body_bytes_sent $skip_cache';
 
 proxy_cache_path /var/run/cache levels=1:2 keys_zone=PROXYCACHE:100m inactive=60m;
-proxy_cache_key "$scheme$request_method$host$request_uri";
+proxy_cache_key "$scheme$request_method$host$request_uri$device";
 
 upstream unicorn_<%= @application[:domains].first %> {
  server unix:<%= @application[:deploy_to]%>/shared/sockets/unicorn.sock fail_timeout=0;
@@ -118,7 +123,7 @@ server {
     if ($request_uri ~* "/shop/checkout|/shop/api|/users|/profile|/login") { set $skip_cache 1; }
     if ($request_method = POST) { set $skip_cache 1; }
     if ($query_string != "") { set $skip_cache 1; }
-    if ($http_cookie ~* "_mejuri_session") { set $skip_cache 1; }
+    #if ($http_cookie ~* "_mejuri_session") { set $skip_cache 1; }
 
     proxy_cache_bypass $skip_cache;
     proxy_no_cache $skip_cache;
@@ -154,6 +159,7 @@ server {
   listen   443;
   server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
   access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>-ssl.access.log;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.cache.log cache_status;
   
   ssl on;
   ssl_certificate /etc/nginx/ssl/<%= @application[:domains].first %>.crt;
@@ -191,7 +197,7 @@ server {
     if ($request_uri ~* "/shop/checkout|/shop/api|/users|/profile|/login") { set $skip_cache 1; }
     if ($request_method = POST) { set $skip_cache 1; }
     if ($query_string != "") { set $skip_cache 1; }
-    if ($http_cookie ~* "_mejuri_session") { set $skip_cache 1; }
+    #if ($http_cookie ~* "_mejuri_session") { set $skip_cache 1; }
 
     proxy_cache_bypass $skip_cache;
     proxy_no_cache $skip_cache;
