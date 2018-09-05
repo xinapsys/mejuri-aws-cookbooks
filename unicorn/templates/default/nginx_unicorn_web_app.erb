@@ -130,8 +130,7 @@ server {
     proxy_cache PROXYCACHE;
     proxy_cache_valid 10m;
     proxy_cache_use_stale error updating timeout invalid_header http_500;
-    proxy_ignore_headers Cache-Control Expires Set-Cookie;
-    proxy_pass_header Set-Cookie;
+    proxy_ignore_headers Cache-Control Expires;
     add_header X-Cache $upstream_cache_status;
 
     # If you don't find the filename in the static files
@@ -205,8 +204,7 @@ server {
     proxy_cache PROXYCACHE;
     proxy_cache_valid 10m;
     proxy_cache_use_stale error updating timeout invalid_header http_500;
-    proxy_ignore_headers Cache-Control Expires Set-Cookie;
-    proxy_pass_header Set-Cookie;
+    proxy_ignore_headers Cache-Control Expires;
     add_header X-Cache $upstream_cache_status;
 
     # If you don't find the filename in the static files
