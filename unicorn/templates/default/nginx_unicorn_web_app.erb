@@ -120,7 +120,7 @@ server {
     proxy_send_timeout <%= node[:nginx][:proxy_send_timeout] %>;
   <% end -%>
 
-    set $skip_cache 0;
+    set $skip_cache 1;
     if ($request_uri ~* "/shop/checkout|/shop/api|/user|/profile|/login") { set $skip_cache 1; }
     if ($request_method = POST) { set $skip_cache 1; }
     if ($query_string != "") { set $skip_cache 1; }
