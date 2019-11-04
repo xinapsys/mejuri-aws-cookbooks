@@ -1,4 +1,3 @@
-node.default[:deploy][application][:database][:adapter] = OpsWorks::RailsConfiguration.determine_database_adapter(application, node[:deploy][application], "#{node[:deploy][application][:deploy_to]}/current", :force => node[:force_database_adapter_detection])
 deploy = node[:deploy][application]
 
 case node[:deploy][application][:database][:adapter]
