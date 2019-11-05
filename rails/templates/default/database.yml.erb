@@ -1,15 +1,16 @@
 <% (['development', 'production'] + [@environment]).uniq.each do |env| -%>
+    <%= env %>:
     <% if @database[:replica] -%>
       makara:
         sticky: true
-        connections:
-          - role: master
-            name: primary
-            url: <%= (@database[:host] || 'localhost').to_s.inspect %> 
-          - name: replica
-            url: <%= (@database[:replica] || 'localhost').to_s.inspect %>
+          connections:
+            - role: master
+              name: primary
+              url: <%= (@database[:host] || 'localhost').to_s.inspect %> 
+            - name: replica
+              url: <%= (@database[:replica] || 'localhost').to_s.inspect %>
     <% end -%>
-    <%= env %>:
+    <% else %>
       adapter: <%= @database[:adapter].to_s.inspect %>
       database: <%= @database[:database].to_s.inspect %>
       encoding: <%= (@database[:encoding] || 'utf8').to_s.inspect %>
@@ -23,4 +24,5 @@
     <% if @database[:port] -%>
       port: <%= @database[:port].to_i.inspect %>
     <% end -%>    
+    <% end -%>
 <% end %>
