@@ -1,4 +1,14 @@
 <% (['development', 'production'] + [@environment]).uniq.each do |env| -%>
+    <% if @database[:replica] -%>
+      makara:
+        sticky: true
+        connections:
+          - role: master
+            name: primary
+            url: <%= (@database[:host] || 'localhost').to_s.inspect %> 
+          - name: replica
+            url: <%= (@database[:replica] || 'localhost').to_s.inspect %>
+    <% end -%>
     <%= env %>:
       adapter: <%= @database[:adapter].to_s.inspect %>
       database: <%= @database[:database].to_s.inspect %>
