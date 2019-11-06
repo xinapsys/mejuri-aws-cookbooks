@@ -1,20 +1,20 @@
 common: &default_settings
- adapter: <%= ENV['DATABASE_ADAPTER'] %>
- pool: <%= ENV['DB_POOL'] || 5 %>
- <% if ENV["MAKARA_ENABLED"].present? %>
+ adapter: <%%= ENV['DATABASE_ADAPTER'] %>
+ pool: <%%= ENV['DB_POOL'] || 5 %>
+ <%% if ENV["MAKARA_ENABLED"].present? %>
  makara:
    sticky: true
    blacklist_duration: 5
    connections:
      - role: master
        name: primary
-       url: <%= ENV["DATABASE_URL_MASTER"] %>
+       url: <%%= ENV["DATABASE_URL_MASTER"] %>
      - name: replica
-       url: <%= ENV["DATABASE_URL_SLAVE"] %>
- <% else %>
+       url: <%%= ENV["DATABASE_URL_SLAVE"] %>
+ <%% else %>
  encoding: unicode
- username: <%= ENV['DATABASE_USERNAME'] %>
- password: <%= ENV['DATABASE_PASSWORD'] %>
- database: <%= ENV['DATABASE_NAME'] %>
- host: <%= ENV["DATABASE_HOST"] %>
- <% end %>
+ username: <%%= ENV['DATABASE_USERNAME'] %>
+ password: <%%= ENV['DATABASE_PASSWORD'] %>
+ database: <%%= ENV['DATABASE_NAME'] %>
+ host: <%%= ENV["DATABASE_HOST"] %>
+ <%% end %>
