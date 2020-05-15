@@ -1,5 +1,5 @@
 include_recipe "deploy"
-
+Chef::Log.info("DEPLOYING MASTER X")
 node[:deploy].each do |application, deploy|
   deploy = node[:deploy][application]
 
