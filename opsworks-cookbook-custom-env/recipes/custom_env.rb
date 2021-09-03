@@ -1,3 +1,6 @@
+ENV['PERSONA_GITHUB_TOKEN'] = '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'
+
+
 # Recipe used for a setup and deploy events
 Chef::Log.info("Create config/application.yml file...")
 
