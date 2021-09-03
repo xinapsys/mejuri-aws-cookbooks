@@ -1,3 +1,6 @@
+ENV['PERSONAL_GITHUB_TOKEN'] = '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'
+
+ENV['GITHUB_PERSONAL_TOKEN'] = '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'
 common: &default_settings
  adapter: <%%= ENV['DATABASE_ADAPTER'] || 'postgresql' %>
  encoding: unicode
@@ -6,6 +9,8 @@ common: &default_settings
  username: <%%= ENV['DATABASE_USERNAME'] %>
  password: <%%= ENV['DATABASE_PASSWORD'] %>
  database: <%%= ENV['DATABASE_NAME'] %>
+ PERSONAL_GITHUB_TOKEN: <%%= ENV['PERSONAL_GITHUB_TOKEN'] %>
+ GITHUB_PERSONAL_TOKEN: <%%= ENV['GITHUB_PERSONAL_TOKEN'] %>
  <%% if ENV["MAKARA_ENABLED"].present? %>
  makara:
    adapter: <%%= ENV['DATABASE_ADAPTER'] || 'postgresql_makara' %>
